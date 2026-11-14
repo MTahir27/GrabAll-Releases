@@ -1,21 +1,21 @@
-# GrabAll Releases & Browser Extensions (v1.0.19)
+# GrabAll Releases & Browser Extensions (v1.0.20)
 
 Official public release repository for **GrabAll** — fast, local-first cross-platform download manager for **macOS** and **Windows**.
 
-- **Website:** [https://graball-project.vercel.app/](https://graball-project.vercel.app/)
+- **Website:** [https://graball-website.vercel.app/](https://graball-website.vercel.app/)
 - **Latest Installers (`.dmg`, `.exe`, `.msi`):** [GitHub Releases](https://github.com/MTahir27/GrabAll-Releases/releases/latest)
 - **Developed By:** Muhammad Tahir ([https://mtdeveloper.vercel.app/](https://mtdeveloper.vercel.app/))
 - **Support Email:** [m.tahiridrees27@gmail.com](mailto:m.tahiridrees27@gmail.com)
 
 ---
 
-## Desktop Installers (v1.0.19)
+## Desktop Installers (v1.0.20)
 
 | Platform | Installer | Direct Download |
 | :--- | :--- | :--- |
-| **macOS** (Apple Silicon & Intel, macOS 12+) | Universal `.dmg` | [GrabAll_1.0.19_universal.dmg](https://github.com/MTahir27/GrabAll-Releases/releases/latest/download/GrabAll_1.0.19_universal.dmg) |
-| **Windows 10 / 11** (64-bit) | Setup `.exe` (NSIS) | [GrabAll_1.0.19_x64-setup.exe](https://github.com/MTahir27/GrabAll-Releases/releases/latest/download/GrabAll_1.0.19_x64-setup.exe) |
-| **Windows 10 / 11** (64-bit) | Windows Installer `.msi` | [GrabAll_1.0.19_x64_en-US.msi](https://github.com/MTahir27/GrabAll-Releases/releases/latest/download/GrabAll_1.0.19_x64_en-US.msi) |
+| **macOS** (Apple Silicon & Intel, macOS 12+) | Universal `.dmg` | [GrabAll_1.0.20_universal.dmg](https://github.com/MTahir27/GrabAll-Releases/releases/latest/download/GrabAll_1.0.20_universal.dmg) |
+| **Windows 10 / 11** (64-bit) | Setup `.exe` (NSIS) | [GrabAll_1.0.20_x64-setup.exe](https://github.com/MTahir27/GrabAll-Releases/releases/latest/download/GrabAll_1.0.20_x64-setup.exe) |
+| **Windows 10 / 11** (64-bit) | Windows Installer `.msi` | [GrabAll_1.0.20_x64_en-US.msi](https://github.com/MTahir27/GrabAll-Releases/releases/latest/download/GrabAll_1.0.20_x64_en-US.msi) |
 
 > **Built-in `yt-dlp` & `ffmpeg`:** GrabAll automatically bundles and downloads standalone `yt-dlp` and `ffmpeg` into its local helper directory on both Windows and macOS — no manual Homebrew or Winget installation is required.
 
