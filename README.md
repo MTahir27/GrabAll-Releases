@@ -25,7 +25,7 @@ Official public release repository for **GrabAll** — fast, local-first cross-p
 
 All browser extensions are included in [`extensions/`](./extensions) and are also **automatically extracted** by the GrabAll desktop app into `Downloads/GrabAll/Browser-Extension/` on first launch:
 
-- **[`extensions/chrome-edge-opera/`](./extensions/chrome-edge-opera)** (and [`extensions/chrome-edge/`](./extensions/chrome-edge)) — **Google Chrome, Microsoft Edge, Opera, Brave, and Vivaldi** (Manifest V3)
+- **[`extensions/chrome-edge-opera/`](./extensions/chrome-edge-opera)** — **Google Chrome, Microsoft Edge, Opera, Brave, and Vivaldi** (Manifest V3)
   - Open `chrome://extensions`, `edge://extensions`, or `opera://extensions` → enable **Developer mode** → click **Load unpacked** → select `Downloads/GrabAll/Browser-Extension` (or `extensions/chrome-edge-opera`).
 - **[`extensions/firefox/`](./extensions/firefox)** — **Mozilla Firefox** (WebExtension with Gecko ID `graball@graball.app`)
   - Open `about:debugging#/runtime/this-firefox` → click **Load Temporary Add-on…** → select `Downloads/GrabAll/Browser-Extension/firefox/manifest.json` (or `extensions/GrabAll-Firefox-Extension.zip`).
