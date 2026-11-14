@@ -99,8 +99,20 @@
     const pattern = permalinkPatternForHost(host);
     if (!pattern) return null;
     if (pattern.test(window.location.href)) return window.location.href;
+    let tiktokVideoId = null;
+    let tiktokAuthor = null;
     let el = video;
-    for (let depth = 0; depth < 12 && el; depth += 1) {
+    for (let depth = 0; depth < 20 && el; depth += 1) {
+      if (host.includes("tiktok.com") && !tiktokVideoId) {
+        const selfId = el.id || "";
+        const m = selfId.match(/(?:xgwrapper-\d+-|^)(\d{15,22})\b/);
+        if (m) tiktokVideoId = m[1];
+        if (!tiktokVideoId && typeof el.querySelector === "function") {
+          const xg = el.querySelector('[id*="xgwrapper-"]');
+          const xm = xg && xg.id && xg.id.match(/xgwrapper-\d+-(\d{15,22})/);
+          if (xm) tiktokVideoId = xm[1];
+        }
+      }
       if (typeof el.querySelectorAll === "function") {
         const links = el.querySelectorAll("a[href]");
         for (const link of links) {
@@ -109,12 +121,22 @@
           try {
             const abs = new URL(href, window.location.origin).href;
             if (pattern.test(abs)) return abs;
+            if (host.includes("tiktok.com") && !tiktokAuthor) {
+              const am = href.match(/^\/@([A-Za-z0-9._-]+)(?:\/|\?|$)/);
+              if (am) tiktokAuthor = am[1];
+            }
           } catch {
             // ignore malformed href
           }
         }
       }
+      if (host.includes("tiktok.com") && tiktokVideoId && tiktokAuthor) {
+        return `https://www.tiktok.com/@${tiktokAuthor}/video/${tiktokVideoId}`;
+      }
       el = el.parentElement;
+    }
+    if (host.includes("tiktok.com") && tiktokVideoId) {
+      return `https://www.tiktok.com/@${tiktokAuthor || "_"}/video/${tiktokVideoId}`;
     }
     return null;
   }
@@ -528,6 +550,30 @@
       menuOpen = false;
       if (menuEl) menuEl.classList.remove("open");
     }
+  });
+
+  chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
+    if (!msg || msg.type !== "graball_resolve_active_video") return false;
+    const videos = Array.from(document.querySelectorAll("video"));
+    let best = currentVideo;
+    let bestScore = -1;
+    for (const v of videos) {
+      const r = v.getBoundingClientRect();
+      const visW = Math.max(0, Math.min(r.right, window.innerWidth) - Math.max(r.left, 0));
+      const visH = Math.max(0, Math.min(r.bottom, window.innerHeight) - Math.max(r.top, 0));
+      const area = visW * visH;
+      if (area <= 0) continue;
+      const score = area + (!v.paused ? 1000000 : 0);
+      if (score > bestScore) {
+        bestScore = score;
+        best = v;
+      }
+    }
+    sendResponse({
+      url: resolveDownloadUrl(best, false),
+      title: resolveVideoTitle(),
+    });
+    return true;
   });
 
   loadPrefs();

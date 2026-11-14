@@ -34,12 +34,39 @@ function isDuplicateAddUrl(payload) {
   return false;
 }
 
-function sendToHost(payload) {
+async function exportCookiesTxtForUrl(rawUrl) {
+  if (!chrome.cookies?.getAll || !rawUrl || !rawUrl.startsWith("http")) return null;
+  try {
+    const cookies = await chrome.cookies.getAll({ url: rawUrl });
+    if (!cookies || cookies.length === 0) return null;
+    const lines = ["# Netscape HTTP Cookie File"];
+    for (const c of cookies) {
+      const domain = c.domain || "";
+      const includeSub = domain.startsWith(".") ? "TRUE" : "FALSE";
+      const path = c.path || "/";
+      const secure = c.secure ? "TRUE" : "FALSE";
+      const expiry = c.expirationDate ? Math.floor(c.expirationDate) : 0;
+      lines.push(`${domain}\t${includeSub}\t${path}\t${secure}\t${expiry}\t${c.name}\t${c.value}`);
+    }
+    return lines.join("\n");
+  } catch {
+    return null;
+  }
+}
+
+async function sendToHost(payload) {
   if (isDuplicateAddUrl(payload)) {
-    return Promise.resolve({ ok: true, deduplicated: true });
+    return { ok: true, deduplicated: true };
+  }
+  const enriched = { ...payload };
+  if (enriched.type === "add_url" && enriched.url && !enriched.cookies_txt) {
+    const cookiesTxt = await exportCookiesTxtForUrl(enriched.url);
+    if (cookiesTxt) {
+      enriched.cookies_txt = cookiesTxt;
+    }
   }
   return new Promise((resolve) => {
-    chrome.runtime.sendNativeMessage(HOST_NAME, payload, (resp) => {
+    chrome.runtime.sendNativeMessage(HOST_NAME, enriched, (resp) => {
       if (chrome.runtime.lastError) {
         resolve({ ok: false, error: chrome.runtime.lastError.message });
       } else {

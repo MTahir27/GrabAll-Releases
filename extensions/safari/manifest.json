@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "GrabAll Download Manager",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "Send Safari downloads, videos, and links straight to GrabAll on macOS.",
   "permissions": [
     "downloads",

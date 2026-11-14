@@ -125,18 +125,38 @@ document.addEventListener("DOMContentLoaded", () => {
     chrome.storage.local.set({ preferredQuality: quickQualityEl.value });
   });
 
-  dlCurrentBtn.addEventListener("click", () => {
+  dlCurrentBtn.addEventListener("click", async () => {
     if (!activeTab?.url || dlCurrentBtn.disabled) return;
     dlCurrentBtn.disabled = true;
     showActionFeedback("Sending to GrabAll…");
+    let targetUrl = activeTab.url;
+    let targetTitle = activeTab.title || "Download";
+    if (activeTab.id) {
+      try {
+        const resolved = await new Promise((resolve) => {
+          chrome.tabs.sendMessage(
+            activeTab.id,
+            { type: "graball_resolve_active_video" },
+            (res) => {
+              if (chrome.runtime.lastError || !res) resolve(null);
+              else resolve(res);
+            }
+          );
+        });
+        if (resolved?.url) targetUrl = resolved.url;
+        if (resolved?.title) targetTitle = resolved.title;
+      } catch {
+        // fallback to activeTab.url
+      }
+    }
     chrome.runtime.sendMessage(
       {
         type: "graball_page_action",
         payload: {
           type: "add_url",
-          url: activeTab.url,
+          url: targetUrl,
           quality: quickQualityEl.value,
-          title: activeTab.title || "Download",
+          title: targetTitle,
           quick_start: true,
         },
       },
