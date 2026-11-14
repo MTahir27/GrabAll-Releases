@@ -90,7 +90,7 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
   if (info.menuItemId === "graball-media") {
     const targetUrl = info.srcUrl || info.pageUrl || tab?.url || "";
     if (targetUrl.startsWith("http://") || targetUrl.startsWith("https://")) {
-      await sendToHost({ type: "add_url", url: targetUrl, title: tab?.title });
+      await sendToHost({ type: "add_url", url: targetUrl, title: tab?.title, quick_start: true });
     }
     return;
   }
@@ -135,5 +135,5 @@ chrome.downloads.onCreated.addListener(async (item) => {
   chrome.downloads.cancel(item.id, () => {
     chrome.downloads.erase({ id: item.id });
   });
-  await sendToHost({ type: "add_url", url });
+  await sendToHost({ type: "add_url", url, quick_start: true });
 });

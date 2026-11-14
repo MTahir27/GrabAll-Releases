@@ -1,36 +1,33 @@
-# GrabAll — Official Releases & Browser Extension
+# GrabAll Releases & Browser Extensions (v1.0.2)
 
-GrabAll is a fast, local-first desktop download manager for macOS and Windows with multi-connection acceleration, YouTube & playlist support, speed scheduling, and browser integration.
+Official public release repository for **GrabAll** — fast, local-first cross-platform download manager for **macOS** and **Windows**.
 
-## Download Latest Installers
-
-* **macOS (Universal — Apple Silicon & Intel, macOS 12+):**
-  [Download GrabAll (.dmg)](https://github.com/MTahir27/GrabAll-Releases/releases/latest/download/GrabAll_1.0.0_universal.dmg)
-* **Windows 10 / 11 (64-bit):**
-  * [Download Installer (.exe)](https://github.com/MTahir27/GrabAll-Releases/releases/latest/download/GrabAll_1.0.0_x64-setup.exe)
-  * [Download MSI Package (.msi)](https://github.com/MTahir27/GrabAll-Releases/releases/latest/download/GrabAll_1.0.0_x64_en-US.msi)
-* **All Releases:** [View Releases](https://github.com/MTahir27/GrabAll-Releases/releases)
+- **Website:** [https://graball-project.vercel.app/](https://graball-project.vercel.app/)
+- **Latest Installers (`.dmg`, `.exe`, `.msi`):** [GitHub Releases](https://github.com/MTahir27/GrabAll-Releases/releases/latest)
+- **Developed By:** Muhammad Tahir ([https://mtdeveloper.vercel.app/](https://mtdeveloper.vercel.app/))
+- **Support Email:** [m.tahiridrees27@gmail.com](mailto:m.tahiridrees27@gmail.com)
 
 ---
 
-## Browser Extension Setup (Chrome & Edge)
+## Desktop Installers (v1.0.2)
 
-1. Download or clone this repository (or copy the `extensions/chrome-edge` folder).
-2. Open `chrome://extensions` (or `edge://extensions`) and enable **Developer mode**.
-3. Click **Load unpacked** and select the [`extensions/chrome-edge`](./extensions/chrome-edge) folder.
-4. Copy the shown **Extension ID**, open **GrabAll → Settings → Browser**, paste the ID (if needed), and click **Reconnect**.
+| Platform | Installer | Direct Download |
+| :--- | :--- | :--- |
+| **macOS** (Apple Silicon & Intel, macOS 12+) | Universal `.dmg` | [GrabAll_1.0.2_universal.dmg](https://github.com/MTahir27/GrabAll-Releases/releases/latest/download/GrabAll_1.0.2_universal.dmg) |
+| **Windows 10 / 11** (64-bit) | Setup `.exe` (NSIS) | [GrabAll_1.0.2_x64-setup.exe](https://github.com/MTahir27/GrabAll-Releases/releases/latest/download/GrabAll_1.0.2_x64-setup.exe) |
+| **Windows 10 / 11** (64-bit) | Windows Installer `.msi` | [GrabAll_1.0.2_x64_en-US.msi](https://github.com/MTahir27/GrabAll-Releases/releases/latest/download/GrabAll_1.0.2_x64_en-US.msi) |
 
----
-
-## Optional Media Tools (YouTube & HD Video Merging)
-
-GrabAll uses `yt-dlp` and `ffmpeg` for video extraction and merging HD (`720p`+) video + audio streams into `.mp4`:
-
-* **macOS (Homebrew):** `brew install yt-dlp ffmpeg`
-* **Windows (Winget):** `winget install yt-dlp.yt-dlp Gyan.FFmpeg`
+> **Built-in `yt-dlp` & `ffmpeg`:** GrabAll automatically bundles and downloads standalone `yt-dlp` and `ffmpeg` into its local helper directory on both Windows and macOS — no manual Homebrew or Winget installation is required.
 
 ---
 
-## Bug Reports & Support
+## Browser Extensions (All Platforms)
 
-Please open an issue in the [Issues tab](https://github.com/MTahir27/GrabAll-Releases/issues) with your OS, GrabAll version, and optional redacted diagnostics copied from **GrabAll → Settings → About → Copy diagnostics**.
+All browser extensions are included in [`extensions/`](./extensions) and are also **automatically extracted** by the GrabAll desktop app into `Downloads/GrabAll/Browser-Extension/` on first launch:
+
+- **[`extensions/chrome-edge-opera/`](./extensions/chrome-edge-opera)** (and [`extensions/chrome-edge/`](./extensions/chrome-edge)) — **Google Chrome, Microsoft Edge, Opera, Brave, and Vivaldi** (Manifest V3)
+  - Open `chrome://extensions`, `edge://extensions`, or `opera://extensions` → enable **Developer mode** → click **Load unpacked** → select `Downloads/GrabAll/Browser-Extension` (or `extensions/chrome-edge-opera`).
+- **[`extensions/firefox/`](./extensions/firefox)** — **Mozilla Firefox** (WebExtension with Gecko ID `graball@graball.app`)
+  - Open `about:debugging#/runtime/this-firefox` → click **Load Temporary Add-on…** → select `Downloads/GrabAll/Browser-Extension/firefox/manifest.json` (or `extensions/GrabAll-Firefox-Extension.zip`).
+- **[`extensions/safari/`](./extensions/safari)** — **Apple Safari on macOS**
+  - Convert with `xcrun safari-web-extension-converter Downloads/GrabAll/Browser-Extension/safari` (or `extensions/safari`) in Xcode on macOS.
