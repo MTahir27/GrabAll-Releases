@@ -87,7 +87,7 @@
       return /\/(reel|reels|p|tv)\/[A-Za-z0-9_-]+/i;
     }
     if (host.includes("facebook.com") || host.includes("fb.watch")) {
-      return /\/(reel|reels|videos)\/[A-Za-z0-9._-]+|\/watch\/?\?(?:.*&)?v=\d+|\/(?:permalink|story)\.php/i;
+      return /\/(reel|reels|videos|posts)\/[A-Za-z0-9._-]+|\/watch\/?\?(?:.*&)?v=\d+|\/share\/(?:r|v|p)\/[A-Za-z0-9._-]+|\/video\.php\?(?:.*&)?v=\d+|\/(?:permalink|story)\.php/i;
     }
     if (host.includes("x.com") || host.includes("twitter.com")) {
       return /\/status\/\d+/i;
@@ -137,6 +137,23 @@
     }
     if (host.includes("tiktok.com") && tiktokVideoId) {
       return `https://www.tiktok.com/@${tiktokAuthor || "_"}/video/${tiktokVideoId}`;
+    }
+    const article =
+      video && typeof video.closest === "function"
+        ? video.closest('[role="article"], article')
+        : null;
+    if (article && typeof article.querySelectorAll === "function") {
+      const links = article.querySelectorAll("a[href]");
+      for (const link of links) {
+        const href = link.getAttribute("href");
+        if (!href || href.startsWith("#") || href.startsWith("javascript:")) continue;
+        try {
+          const abs = new URL(href, window.location.origin).href;
+          if (pattern.test(abs)) return abs;
+        } catch {
+          // ignore
+        }
+      }
     }
     return null;
   }
