@@ -126,7 +126,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   dlCurrentBtn.addEventListener("click", () => {
-    if (!activeTab?.url) return;
+    if (!activeTab?.url || dlCurrentBtn.disabled) return;
+    dlCurrentBtn.disabled = true;
     showActionFeedback("Sending to GrabAll…");
     chrome.runtime.sendMessage(
       {
@@ -140,6 +141,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
       },
       (resp) => {
+        dlCurrentBtn.disabled = false;
         if (chrome.runtime.lastError || !resp || !resp.ok) {
           showActionFeedback("Could not reach GrabAll. Check Settings → Browser.", true);
         } else {

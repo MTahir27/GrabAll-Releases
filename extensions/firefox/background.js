@@ -21,7 +21,23 @@ function hostnameOf(rawUrl) {
   }
 }
 
+const RECENT_ADD_URLS = new Map();
+function isDuplicateAddUrl(payload) {
+  if (!payload || payload.type !== "add_url" || !payload.url) return false;
+  const now = Date.now();
+  for (const [k, ts] of RECENT_ADD_URLS.entries()) {
+    if (now - ts > 5000) RECENT_ADD_URLS.delete(k);
+  }
+  const prev = RECENT_ADD_URLS.get(payload.url);
+  if (prev && now - prev < 5000) return true;
+  RECENT_ADD_URLS.set(payload.url, now);
+  return false;
+}
+
 function sendToHost(payload) {
+  if (isDuplicateAddUrl(payload)) {
+    return Promise.resolve({ ok: true, deduplicated: true });
+  }
   return new Promise((resolve) => {
     chrome.runtime.sendNativeMessage(HOST_NAME, payload, (resp) => {
       if (chrome.runtime.lastError) {

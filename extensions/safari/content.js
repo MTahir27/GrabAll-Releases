@@ -320,7 +320,10 @@
     if (lbl) lbl.textContent = text;
   }
 
+  let sendingDownload = false;
   function triggerDownload({ quality, quickStart, playlist }) {
+    if (sendingDownload) return;
+    sendingDownload = true;
     const url = resolveDownloadUrl(currentVideo, playlist);
     const title = resolveVideoTitle();
     setButtonLabel("Sending…");
@@ -339,6 +342,7 @@
           },
         },
         (resp) => {
+          sendingDownload = false;
           if (chrome.runtime.lastError || !resp || !resp.ok) {
             setButtonLabel("Open GrabAll App");
           } else {
@@ -350,6 +354,7 @@
         }
       );
     } catch {
+      sendingDownload = false;
       setButtonLabel("Reload page");
     }
   }
