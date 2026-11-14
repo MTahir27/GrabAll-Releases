@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const dlCurrentBtn = document.getElementById("dlCurrentBtn");
   const dlPlaylistBtn = document.getElementById("dlPlaylistBtn");
   const scanLinksBtn = document.getElementById("scanLinksBtn");
+  const openAppBtn = document.getElementById("openAppBtn");
   const actionMsg = document.getElementById("actionMsg");
 
   let activeTab = null;
@@ -186,4 +187,23 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     );
   });
+
+  if (openAppBtn) {
+    openAppBtn.addEventListener("click", () => {
+      showActionFeedback("Opening GrabAll…");
+      chrome.runtime.sendMessage(
+        {
+          type: "graball_page_action",
+          payload: { type: "open_app" },
+        },
+        (resp) => {
+          if (chrome.runtime.lastError || !resp || !resp.ok) {
+            showActionFeedback("Could not reach GrabAll. Check Settings → Browser.", true);
+          } else {
+            showActionFeedback("GrabAll opened.");
+          }
+        }
+      );
+    });
+  }
 });
