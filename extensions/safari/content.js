@@ -79,6 +79,46 @@
     // Ignore
   }
 
+  function permalinkPatternForHost(host) {
+    if (host.includes("tiktok.com")) {
+      return /\/@[^/]+\/video\/\d+|\/t\/[A-Za-z0-9]+/i;
+    }
+    if (host.includes("instagram.com") || host.includes("instagr.am")) {
+      return /\/(reel|reels|p|tv)\/[A-Za-z0-9_-]+/i;
+    }
+    if (host.includes("facebook.com") || host.includes("fb.watch")) {
+      return /\/(reel|reels|videos)\/[A-Za-z0-9._-]+|\/watch\/?\?(?:.*&)?v=\d+|\/(?:permalink|story)\.php/i;
+    }
+    if (host.includes("x.com") || host.includes("twitter.com")) {
+      return /\/status\/\d+/i;
+    }
+    return null;
+  }
+
+  function findFeedVideoPermalink(video, host) {
+    const pattern = permalinkPatternForHost(host);
+    if (!pattern) return null;
+    if (pattern.test(window.location.href)) return window.location.href;
+    let el = video;
+    for (let depth = 0; depth < 12 && el; depth += 1) {
+      if (typeof el.querySelectorAll === "function") {
+        const links = el.querySelectorAll("a[href]");
+        for (const link of links) {
+          const href = link.getAttribute("href");
+          if (!href || href.startsWith("#") || href.startsWith("javascript:")) continue;
+          try {
+            const abs = new URL(href, window.location.origin).href;
+            if (pattern.test(abs)) return abs;
+          } catch {
+            // ignore malformed href
+          }
+        }
+      }
+      el = el.parentElement;
+    }
+    return null;
+  }
+
   function resolveDownloadUrl(video, forPlaylist) {
     const pageUrl = window.location.href;
     if (forPlaylist) return pageUrl;
@@ -98,7 +138,9 @@
       host.includes("twitch.tv") ||
       host.includes("reddit.com") ||
       host.includes("linkedin.com");
-    if (isExtractorSite) return pageUrl;
+    if (isExtractorSite) {
+      return findFeedVideoPermalink(video, host) || pageUrl;
+    }
     const src = (video && (video.currentSrc || video.src)) || "";
     if (
       (src.startsWith("http://") || src.startsWith("https://")) &&
