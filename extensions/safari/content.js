@@ -82,6 +82,23 @@
   function resolveDownloadUrl(video, forPlaylist) {
     const pageUrl = window.location.href;
     if (forPlaylist) return pageUrl;
+    const host = hostnameNow();
+    const isExtractorSite =
+      host.includes("youtube.com") ||
+      host.includes("youtu.be") ||
+      host.includes("facebook.com") ||
+      host.includes("fb.watch") ||
+      host.includes("instagram.com") ||
+      host.includes("instagr.am") ||
+      host.includes("tiktok.com") ||
+      host.includes("x.com") ||
+      host.includes("twitter.com") ||
+      host.includes("vimeo.com") ||
+      host.includes("dailymotion.com") ||
+      host.includes("twitch.tv") ||
+      host.includes("reddit.com") ||
+      host.includes("linkedin.com");
+    if (isExtractorSite) return pageUrl;
     const src = (video && (video.currentSrc || video.src)) || "";
     if (
       (src.startsWith("http://") || src.startsWith("https://")) &&
