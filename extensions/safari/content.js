@@ -437,6 +437,7 @@
             quality,
             title,
             quick_start: Boolean(quickStart),
+            playlist: Boolean(playlist),
           },
         },
         (resp) => {

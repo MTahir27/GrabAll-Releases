@@ -183,6 +183,7 @@ document.addEventListener("DOMContentLoaded", () => {
           quality: quickQualityEl.value,
           title: activeTab.title || "Playlist",
           quick_start: false,
+          playlist: true,
         },
       },
       (resp) => {

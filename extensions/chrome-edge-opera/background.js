@@ -28,9 +28,10 @@ function isDuplicateAddUrl(payload) {
   for (const [k, ts] of RECENT_ADD_URLS.entries()) {
     if (now - ts > 5000) RECENT_ADD_URLS.delete(k);
   }
-  const prev = RECENT_ADD_URLS.get(payload.url);
+  const dedupKey = `${payload.playlist ? "pl:" : ""}${payload.url}`;
+  const prev = RECENT_ADD_URLS.get(dedupKey);
   if (prev && now - prev < 5000) return true;
-  RECENT_ADD_URLS.set(payload.url, now);
+  RECENT_ADD_URLS.set(dedupKey, now);
   return false;
 }
 
