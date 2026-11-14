@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>GrabAll</title>
+    <style>
+      :root {
+        --bg: #f6f8f7;
+        --card: #ffffff;
+        --ink: #171b18;
+        --ink-2: #5a655e;
+        --line: #e2e8e4;
+        --accent: #1d8a4e;
+        --accent-hover: #177240;
+        --accent-soft: #e6f5ec;
+        --warn-bg: #fff5f5;
+        --warn-ink: #b42318;
+        --warn-line: #f9d7d5;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #121513;
+          --card: #1a1f1c;
+          --ink: #edf2ee;
+          --ink-2: #9ba89f;
+          --line: #2a332d;
+          --accent: #27a961;
+          --accent-hover: #2ec270;
+          --accent-soft: rgba(39, 169, 97, 0.16);
+          --warn-bg: rgba(180, 35, 24, 0.14);
+          --warn-ink: #fda29b;
+          --warn-line: rgba(253, 162, 155, 0.25);
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        width: 328px;
+        margin: 0;
+        padding: 12px;
+        font-size: 13px;
+        color: var(--ink);
+        background: var(--bg);
+      }
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .brand img {
+        width: 24px;
+        height: 24px;
+        border-radius: 6px;
+      }
+      .brand-title {
+        font-weight: 700;
+        font-size: 14px;
+        letter-spacing: -0.01em;
+      }
+      .pill {
+        font-size: 11px;
+        font-weight: 600;
+        padding: 3px 8px;
+        border-radius: 999px;
+        background: var(--line);
+        color: var(--ink-2);
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+      }
+      .pill.ok {
+        background: var(--accent-soft);
+        color: var(--accent);
+      }
+      .pill.err {
+        background: var(--warn-bg);
+        color: var(--warn-ink);
+      }
+      .dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: currentColor;
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 10px;
+        margin-bottom: 10px;
+      }
+      .card-title {
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: var(--ink-2);
+        margin: 0 0 8px;
+      }
+      .quick-row {
+        display: flex;
+        gap: 6px;
+        margin-bottom: 7px;
+      }
+      select {
+        appearance: none;
+        background: var(--bg);
+        color: var(--ink);
+        border: 1px solid var(--line);
+        border-radius: 7px;
+        padding: 6px 24px 6px 9px;
+        font-size: 12px;
+        font-weight: 500;
+        cursor: pointer;
+        background-image: linear-gradient(45deg, transparent 50%, var(--ink-2) 50%),
+          linear-gradient(135deg, var(--ink-2) 50%, transparent 50%);
+        background-position: calc(100% - 12px) 50%, calc(100% - 7px) 50%;
+        background-size: 5px 5px, 5px 5px;
+        background-repeat: no-repeat;
+      }
+      .btn {
+        border: 1px solid var(--line);
+        background: var(--card);
+        color: var(--ink);
+        border-radius: 7px;
+        padding: 7px 10px;
+        font-size: 12.5px;
+        font-weight: 600;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        width: 100%;
+        transition: background 120ms ease, border-color 120ms ease;
+      }
+      .btn:hover:not(:disabled) {
+        background: var(--bg);
+      }
+      .btn:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+      }
+      .btn-primary {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: #ffffff;
+        flex: 1;
+      }
+      .btn-primary:hover:not(:disabled) {
+        background: var(--accent-hover);
+      }
+      .btn-secondary {
+        margin-top: 6px;
+      }
+      .action-msg {
+        margin-top: 7px;
+        font-size: 11.5px;
+        color: var(--accent);
+        min-height: 15px;
+      }
+      .action-msg.err {
+        color: var(--warn-ink);
+      }
+      .row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 6px 0;
+        cursor: pointer;
+      }
+      .row + .row {
+        border-top: 1px solid var(--line);
+      }
+      .row-label {
+        font-size: 12.5px;
+        font-weight: 500;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .switch {
+        position: relative;
+        display: inline-block;
+        width: 34px;
+        height: 19px;
+        flex-shrink: 0;
+      }
+      .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+        position: absolute;
+      }
+      .slider {
+        position: absolute;
+        inset: 0;
+        background: var(--line);
+        border-radius: 999px;
+        transition: background 140ms ease;
+      }
+      .slider::before {
+        content: "";
+        position: absolute;
+        width: 15px;
+        height: 15px;
+        left: 2px;
+        top: 2px;
+        border-radius: 50%;
+        background: #ffffff;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+        transition: transform 140ms ease;
+      }
+      .switch input:checked + .slider {
+        background: var(--accent);
+      }
+      .switch input:checked + .slider::before {
+        transform: translateX(15px);
+      }
+      .help-box {
+        display: none;
+        background: var(--warn-bg);
+        border: 1px solid var(--warn-line);
+        color: var(--warn-ink);
+        border-radius: 10px;
+        padding: 9px 10px;
+        font-size: 11.5px;
+        line-height: 1.45;
+      }
+      .help-box.visible {
+        display: block;
+      }
+      .id-row {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: 6px;
+      }
+      .id-code {
+        flex: 1;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 10.5px;
+        background: var(--card);
+        color: var(--ink);
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        padding: 4px 6px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .copy-btn {
+        border: 1px solid var(--line);
+        background: var(--card);
+        color: var(--ink);
+        border-radius: 6px;
+        padding: 4px 8px;
+        font-size: 11px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <div class="brand">
+        <img src="icons/icon32.png" alt="GrabAll" />
+        <span class="brand-title">GrabAll</span>
+      </div>
+      <span id="status" class="pill"><span class="dot"></span><span id="statusText">Checking…</span></span>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Quick Download</div>
+      <div class="quick-row">
+        <select id="quickQuality" aria-label="Video quality">
+          <option value="1080p">1080p MP4</option>
+          <option value="720p">720p MP4</option>
+          <option value="best">Best (4K)</option>
+          <option value="480p">480p MP4</option>
+          <option value="mp3">Audio MP3</option>
+        </select>
+        <button id="dlCurrentBtn" class="btn btn-primary" type="button">
+          Download Page / Video
+        </button>
+      </div>
+      <button id="dlPlaylistBtn" class="btn btn-secondary" type="button" style="display: none">
+        Download Full Playlist…
+      </button>
+      <button id="scanLinksBtn" class="btn btn-secondary" type="button">
+        Grab All Links on Page
+      </button>
+      <div id="actionMsg" class="action-msg"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Browser Capture</div>
+      <label class="row">
+        <span class="row-label">Catch browser downloads</span>
+        <span class="switch">
+          <input type="checkbox" id="globalEnabled" />
+          <span class="slider"></span>
+        </span>
+      </label>
+      <label class="row">
+        <span class="row-label">Floating video download button</span>
+        <span class="switch">
+          <input type="checkbox" id="videoOverlayEnabled" />
+          <span class="slider"></span>
+        </span>
+      </label>
+      <label class="row" id="siteRow" style="display: none">
+        <span class="row-label" id="siteLabel">Enabled on this site</span>
+        <span class="switch">
+          <input type="checkbox" id="siteEnabled" />
+          <span class="slider"></span>
+        </span>
+      </label>
+      <label class="row">
+        <span class="row-label">Minimum file size</span>
+        <select id="thresholdMb">
+          <option value="0">Everything</option>
+          <option value="1">1 MB</option>
+          <option value="5">5 MB</option>
+          <option value="25">25 MB</option>
+        </select>
+      </label>
+    </div>
+
+    <div id="helpBox" class="help-box">
+      <strong>Connect to GrabAll Desktop:</strong> Open <b>GrabAll → Settings → Browser</b>, click <b>Install / Repair</b> next to Chrome or Edge (paste your Extension ID if prompted):
+      <div class="id-row">
+        <code id="extIdCode" class="id-code"></code>
+        <button id="copyIdBtn" class="copy-btn" type="button">Copy ID</button>
+      </div>
+    </div>
+
+    <script src="popup.js"></script>
+  </body>
+</html>

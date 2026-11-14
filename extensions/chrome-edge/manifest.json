@@ -1,0 +1,43 @@
+{
+  "manifest_version": 3,
+  "name": "GrabAll Download Manager",
+  "version": "1.0.0",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzbwUbGuaTev28Z5BMVds0v0rg3TS2RK8nZda7ekGDUBEAF9dbJ5iNdD6B2Q9dECqIWrGUYfNOtKqkXp9OSLKaKqDj7vnzjdj8O08e1qXqnhuk5BBRxWoh7tbQV0rk8Jp/kCFamOYWvz6erX6M5QyknMU1ipP+rK08Te1CdNdnRIfwGS1ZEYLIdriWB5lysyyJRiRd+wIcuvA6peWJzJQyk7pUUTcwSDLkq5+hd+V+/AzqHnXOF9cGR+PLq/HfY8x8g+lK9N1GbMSWJ+QntwtNWoyAtc/u4xe7He5bRA7xMtLEltAB/su5IAiTtlVqyhK97uRsOTmlQx1+PzvKll42wIDAQAB",
+  "description": "Send browser downloads, videos, links, and playlists straight to GrabAll.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": [
+    "downloads",
+    "contextMenus",
+    "storage",
+    "nativeMessaging",
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": ["http://*/*", "https://*/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "GrabAll Download Manager",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  }
+}
