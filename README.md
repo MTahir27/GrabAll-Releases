@@ -1,4 +1,4 @@
-# GrabAll Releases & Browser Extensions (v1.0.7)
+# GrabAll Releases & Browser Extensions (v1.0.8)
 
 Official public release repository for **GrabAll** — fast, local-first cross-platform download manager for **macOS** and **Windows**.
 
@@ -9,13 +9,13 @@ Official public release repository for **GrabAll** — fast, local-first cross-p
 
 ---
 
-## Desktop Installers (v1.0.7)
+## Desktop Installers (v1.0.8)
 
 | Platform | Installer | Direct Download |
 | :--- | :--- | :--- |
-| **macOS** (Apple Silicon & Intel, macOS 12+) | Universal `.dmg` | [GrabAll_1.0.7_universal.dmg](https://github.com/MTahir27/GrabAll-Releases/releases/latest/download/GrabAll_1.0.7_universal.dmg) |
-| **Windows 10 / 11** (64-bit) | Setup `.exe` (NSIS) | [GrabAll_1.0.7_x64-setup.exe](https://github.com/MTahir27/GrabAll-Releases/releases/latest/download/GrabAll_1.0.7_x64-setup.exe) |
-| **Windows 10 / 11** (64-bit) | Windows Installer `.msi` | [GrabAll_1.0.7_x64_en-US.msi](https://github.com/MTahir27/GrabAll-Releases/releases/latest/download/GrabAll_1.0.7_x64_en-US.msi) |
+| **macOS** (Apple Silicon & Intel, macOS 12+) | Universal `.dmg` | [GrabAll_1.0.8_universal.dmg](https://github.com/MTahir27/GrabAll-Releases/releases/latest/download/GrabAll_1.0.8_universal.dmg) |
+| **Windows 10 / 11** (64-bit) | Setup `.exe` (NSIS) | [GrabAll_1.0.8_x64-setup.exe](https://github.com/MTahir27/GrabAll-Releases/releases/latest/download/GrabAll_1.0.8_x64-setup.exe) |
+| **Windows 10 / 11** (64-bit) | Windows Installer `.msi` | [GrabAll_1.0.8_x64_en-US.msi](https://github.com/MTahir27/GrabAll-Releases/releases/latest/download/GrabAll_1.0.8_x64_en-US.msi) |
 
 > **Built-in `yt-dlp` & `ffmpeg`:** GrabAll automatically bundles and downloads standalone `yt-dlp` and `ffmpeg` into its local helper directory on both Windows and macOS — no manual Homebrew or Winget installation is required.
 

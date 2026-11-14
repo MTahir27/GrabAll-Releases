@@ -95,7 +95,11 @@
   function resolveVideoTitle() {
     const ytTitle = document.querySelector("h1.ytd-watch-metadata yt-formatted-string, h1.title yt-formatted-string");
     const raw = (ytTitle && ytTitle.textContent) || document.title || "Video";
-    return raw.replace(/\s*-\s*YouTube$/i, "").trim() || "Video";
+    const cleaned = raw
+      .replace(/^\(\d+\+?\)\s*/, "")
+      .replace(/\s*-\s*YouTube$/i, "")
+      .trim();
+    return cleaned || "Video";
   }
 
   function hasPlaylistInUrl() {
